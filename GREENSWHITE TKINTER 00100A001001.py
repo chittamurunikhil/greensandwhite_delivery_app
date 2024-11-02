@@ -12,9 +12,14 @@ class ECommerceApp(tk.Tk):
         self.notebook.pack(fill=tk.BOTH, expand=True)
 
         # Create category tabs
-        self.create_category_tab("Electronics")
-        self.create_category_tab("Clothing")
-        self.create_category_tab("Books")
+        self.create_category_tab("VEGETABLES")
+        self.create_category_tab("FRUITS")
+        self.create_category_tab("MILK AND PRODUCTS")
+        self.create_category_tab("EGGS")
+        self.create_category_tab("MEAT")
+        self.create_category_tab("LEAF POWDERS")
+        self.create_category_tab("OILS")
+        self.create_category_tab("SOLAR DRIED PRODUCTS")
 
     def create_category_tab(self, category_name):
         category_tab = ttk.Frame(self.notebook)
