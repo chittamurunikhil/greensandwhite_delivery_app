@@ -25,6 +25,18 @@ class ECommerceApp(tk.Tk):
         self.create_category_tab("OILS")
         self.create_category_tab("SOLAR DRIED PRODUCTS")
 
+        # Create a frame for the cart
+        self.cart_frame = tk.Frame(self)
+        self.cart_frame.pack(fill=tk.X)
+
+        # Create a label for the cart title
+        self.cart_label = tk.Label(self.cart_frame, text="Cart:")
+        self.cart_label.pack()
+
+        # Create a listbox to display cart items
+        self.cart_listbox = tk.Listbox(self.cart_frame)
+        self.cart_listbox.pack(fill=tk.Y, expand=True)
+
     def create_category_tab(self, category_name):
         category_tab = ttk.Frame(self.notebook)
         self.notebook.add(category_tab, text=category_name)
@@ -60,7 +72,14 @@ class ECommerceApp(tk.Tk):
 
     def add_quantity(self, product_name):
         self.products[product_name] += 1
-        print(f"Added {product_name} to cart (Quantity: {self.products[product_name]})")  # Update based on your needs
+        self.update_cart_list()
+        print(f"Added {product_name} to cart (Quantity: {self.products[product_name]})")
+
+    def update_cart_list(self):
+        self.cart_listbox.delete(0, tk.END)  # Clear existing items
+        for product, quantity in self.products.items():
+            if quantity > 0:
+                self.cart_listbox.insert(tk.END, f"{product} (Qty: {quantity})")
 
 
 if __name__ == "__main__":
