@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 
-
 class ECommerceApp(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -26,9 +25,14 @@ class ECommerceApp(tk.Tk):
         self.create_category_tab("OILS")
         self.create_category_tab("SOLAR DRIED PRODUCTS")
 
+        # Create a cart button
+        self.cart_button = tk.Button(self, text="Cart", command=self.toggle_cart)
+        self.cart_button.pack(side=tk.RIGHT, anchor=tk.NE)
+
         # Create a frame for the cart
         self.cart_frame = tk.Frame(self)
         self.cart_frame.pack(fill=tk.X)
+        self.cart_frame.pack_forget()  # Initially hide the cart frame
 
         # Create a label for the cart title
         self.cart_label = tk.Label(self.cart_frame, text="Cart:")
@@ -104,12 +108,6 @@ class ECommerceApp(tk.Tk):
             self.update_button_states((product_name, category_name))
             print(f"Removed {product_name} from {category_name} cart (Quantity: {self.products[category_name].get(product_name, 0)})")
 
-    # def update_cart_list(self):
-    #     for category, products in self.products.items():
-    #         listbox = self.category_cart_listboxes[category]
-    #         listbox.delete(0, tk.END)
-    #         for product, quantity in products.items():
-    #             listbox.insert(tk.END, f"{product} (Qty: {quantity})")
     def update_cart_list(self):
         for category, products in self.products.items():
             listbox = self.category_cart_listboxes[category]
@@ -126,6 +124,11 @@ class ECommerceApp(tk.Tk):
         else:
             button.config(state=tk.DISABLED)
 
+    def toggle_cart(self):
+        if self.cart_frame.winfo_viewable():
+            self.cart_frame.pack_forget()
+        else:
+            self.cart_frame.pack(fill=tk.X)
 
 if __name__ == "__main__":
     app = ECommerceApp()
