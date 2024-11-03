@@ -98,18 +98,25 @@ class ECommerceApp(tk.Tk):
     def remove_quantity(self, product_name, category_name):
         if category_name in self.products and product_name in self.products[category_name]:
             self.products[category_name][product_name] -= 1
-            # if self.products[category_name][product_name] == 0:
-            #     del self.products[category_name][product_name]
+            if self.products[category_name][product_name] == 0:
+                del self.products[category_name][product_name]
             self.update_cart_list()
             self.update_button_states((product_name, category_name))
             print(f"Removed {product_name} from {category_name} cart (Quantity: {self.products[category_name].get(product_name, 0)})")
 
+    # def update_cart_list(self):
+    #     for category, products in self.products.items():
+    #         listbox = self.category_cart_listboxes[category]
+    #         listbox.delete(0, tk.END)
+    #         for product, quantity in products.items():
+    #             listbox.insert(tk.END, f"{product} (Qty: {quantity})")
     def update_cart_list(self):
         for category, products in self.products.items():
             listbox = self.category_cart_listboxes[category]
             listbox.delete(0, tk.END)
             for product, quantity in products.items():
-                listbox.insert(tk.END, f"{product} (Qty: {quantity})")
+                if quantity > 0:  # Only add products with positive quantity
+                    listbox.insert(tk.END, f"{product} (Qty: {quantity})")
 
     def update_button_states(self, product_category_tuple):
         product_name, category_name = product_category_tuple
